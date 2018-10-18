@@ -155,12 +155,15 @@ function mainMenu(person, people) {
   switch (displayOption) {
     case "info":
       // TODO: get person's info
+      return displayPerson(person, people)
       break;
     case "family":
       // TODO: get person's family
+      return displayFamily(person, people)
       break;
     case "descendants":
       // TODO: get person's descendants
+      return displayDescendants(person, people)
       break;
     case "restart":
       app(people); // restart
@@ -192,7 +195,7 @@ function displayPerson(person) {
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo += "Gender: " + person.Gender + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Age: " + person.dob + "\n";
@@ -204,6 +207,13 @@ function displayPerson(person) {
   alert(personInfo);
 }
 
+function displayFamily(person) {
+  // Family lookup
+}
+
+function displayDescendants(person) {
+  // Descendants lookup
+}
 // function that prompts and validates user input
 function promptFor(question, callback) {
   do {
