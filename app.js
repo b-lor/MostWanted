@@ -182,7 +182,6 @@ function searchByName(people) {
   // TODO: find the person using the name they entered
 
 }
-
 // alerts a list of people
 function displayPeople(people) {
   alert(people.map(function (person) {
@@ -208,11 +207,17 @@ function displayPerson(person) {
 }
 
 function displayFamily(person) {
-  // Family lookup
-}
+  // parents
+  // spouse
+  // children
+  // siblings
+
+// }
 
 function displayDescendants(person) {
   // Descendants lookup
+  // has kids
+  // are 
 }
 // function that prompts and validates user input
 function promptFor(question, callback) {
