@@ -7,7 +7,7 @@ function app(people) {
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch (searchType) {
     case 'yes':
-      // TODO: search by namepoopoo
+      // TODO: search by name
       searchByName(people);
       break;
     case 'no':
@@ -192,7 +192,7 @@ function displayPerson(person) {
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo += "Gender: " + person.Gender + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Age: " + person.dob + "\n";
