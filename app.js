@@ -206,19 +206,7 @@ function displayPerson(person) {
   alert(personInfo);
 }
 
-function displayFamily(person) {
-  // parents
-  // spouse
-  // children
-  // siblings
 
-// }
-
-function displayDescendants(person) {
-  // Descendants lookup
-  // has kids
-  // are 
-}
 // function that prompts and validates user input
 function promptFor(question, callback) {
   do {
@@ -235,4 +223,40 @@ function yesNo(input) {
 // helper function to pass in as default promptFor validation
 function chars(input) {
   return true; // default validation only
+}
+
+function displayFamily(person, people){
+  let family = "";
+    if(person.parents.length > 0){
+    family = "Parents: " + findName(person.parents[0], people) + "\n";
+    if(person.parents.length > 1){ 
+      family += findName(person.parents[1], people) + "\n";
+    }
+  }
+  if(person.currentSpouse != null){
+    family +=  "Spouse: " + findName(person.currentSpouse, people) + "\n";
+
+  }
+  console.log(family);
+}
+
+function displayDescendants(person, people) {
+
+}
+
+function findName(id, people){
+  let name = people.filter(function(el){
+    if(el.id == id){
+      return true;
+    }
+  });
+  return name[0].firstName + " " +  name[0].lastName;
+}
+
+function getSiblings(person, people)
+{
+  let siblings = people.filter(function(el){
+    return (el.parents.includes(person.parents[0]) || el.parents.includes(person.parents[1]))    
+  })
+  return siblings;
 }
