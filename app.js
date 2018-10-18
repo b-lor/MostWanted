@@ -155,15 +155,12 @@ function mainMenu(person, people) {
   switch (displayOption) {
     case "info":
       // TODO: get person's info
-      return displayPerson(person, people)
       break;
     case "family":
       // TODO: get person's family
-      return displayFamily(person, people)
       break;
     case "descendants":
       // TODO: get person's descendants
-      return displayDescendants(person, people)
       break;
     case "restart":
       app(people); // restart
@@ -207,13 +204,6 @@ function displayPerson(person) {
   alert(personInfo);
 }
 
-function displayFamily(person) {
-  // Family lookup
-}
-
-function displayDescendants(person) {
-  // Descendants lookup
-}
 // function that prompts and validates user input
 function promptFor(question, callback) {
   do {
