@@ -1,7 +1,7 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
- 
+
 // app is the function called to start the entire application
 function app(people) {
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -144,7 +144,7 @@ function searchByOccupation(people) {
 function mainMenu(person, people) {
  
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
- 
+
   if (!person) {
     alert("Could not find that individual.");
     return app(people); // restart
@@ -155,15 +155,15 @@ function mainMenu(person, people) {
   switch (displayOption) {
     case "info":
       // TODO: get person's info
-      return displayPerson(person, people)
+      return displayPerson(person, people);
       break;
     case "family":
       // TODO: get person's family
-      return displayFamily(person, people)
+      return displayFamily(person, people);
       break;
     case "descendants":
       // TODO: get person's descendants
-      return displayDescendants(person, people)
+      return anyDescendants(person, people);
       break;
     case "restart":
       app(people); // restart
@@ -236,27 +236,122 @@ function chars(input) {
  
 function displayFamily(person, people){
   let family = "";
-    if(person.parents.length > 0){
-    family = "Parents: " + findName(person.parents[0], people) + "\n";
-    if(person.parents.length > 1){ 
-      family += findName(person.parents[1], people) + "\n";
-    }
+
+  if(person.parents.length > 0){
+    family = "Parents: " + "\n" + findName(person.parents[0], people) + "\n";
+  if(person.parents.length > 1){ 
+    family += findName(person.parents[1], people) + "\n" + "\n";
   }
-  if(person.currentSpouse != null){
-    family +=  "Spouse: " + findName(person.currentSpouse, people) + "\n";
   }
-  console.log(family);
-}
- 
-function displayDescendants(person, people) {
- 
+
+  if(person.currentSpouse !== null){
+    family += "Spouse: " + "\n" + findName(person.currentSpouse, people) + "\n" + "\n";
+  }
+
+  if(anyChildren(people, person).length > 0){
+    family += "Children: " + "\n" + anyChildren(people, person) + "\n" + "\n";
+  }
+
+  if(anySiblings(people, person).length > 0){
+    family += "Siblings: " + "\n" + anySiblings(people, person) + "\n" + "\n";
+  }
+ console.log(family);
 }
  
 function findName(id, people){
   let name = people.filter(function(el){
     if(el.id == id){
-      return true;
+    return true;
     }
   });
-  return name[0].firstName + " " +  name[0].lastName;
+  return name[0].firstName + " " + name[0].lastName;
+}
+
+function anyChildren(people, person){
+  let string = " ";
+  let children = people.filter(function(el){
+    for (let i = 0; i < el.parents.length; i++) {
+      if(el.parents[i] === person.id){
+      return true;
+      }
+    }
+  });
+
+  for (var i = 0; i < children.length; i++) {
+    string = string.concat(children[i].firstName + " " + children[i].lastName + "\n");
+  }
+  return string;
+}
+
+function anySiblings(people, person){
+  let siblings = people.filter(function(el){
+    if(el.id === person.id){
+      return false;
+      console.log("your siblings 1" + siblings)
+    }
+    if(el.parents.length === 2){
+      if(el.parents[0] === person.parents[0] && el.parents[1] === person.parents[1] ||
+      el.parents[1] === person.parents[0] && el.parents[0] === person.parents[1] ){
+        return true;
+        console.log("your siblings 2" + siblings)
+      }
+    }
+    if(el.parents.length === 1){
+      if(el.parents.length === person.parents.length){
+        if(el.parents[0] === person.parents[0]){
+          return true;
+          console.log("your siblings 3" + siblings)
+        }
+      }
+    }
+  });
+
+  let string = " ";
+  for (var i = 0; i < siblings.length; i++) {
+   string = string.concat(siblings[i].firstName + " " + siblings[i].lastName + "\n");
+  }
+  return string;
+}
+
+  function anyDescendants(person, people) {
+
+    var descendants = findDescendants(person, people);
+  
+    if (descendants.length === 0) {
+        descendants = "Descendants not in data set."
+    }
+  //console.log(descendants)
+  }
+  
+  function findDescendants(person, people) {
+  
+    var descendant = getDescendants(person, people);
+    var descendantsToReturn = "";
+  
+    for (var i = 0; i < descendant.length; i++) {
+        descendantsToReturn += descendant[i].firstName + " " + descendant[i].lastName  + "\n";
+  
+        if (i >= 0) {
+            var grandChildren = findDescendants(descendant[i], people);
+            descendantsToReturn += grandChildren;
+        }
+    }
+  console.log(descendantsToReturn)
+    return descendantsToReturn;
+  }
+
+function getDescendants(person, people) {
+
+let descendants = people.filter(function(el){
+      if (el.parents.length === 0) {
+          return false;
+      }
+      else if (el.parents[0] === person.id || el.parents[1] === person.id) {
+          return true;
+      }
+      console.log("your" + person.id)
+      console.log("yours" + el.parents[0])
+  });
+
+  return descendants;
 }
