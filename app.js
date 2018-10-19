@@ -248,11 +248,11 @@ function displayFamily(person, people){
     family += "Spouse: " + "\n" + findName(person.currentSpouse, people) + "\n" + "\n";
   }
 
-  if(anyChildren(people, person).length > 0){
+  if(anyChildren(people, person).length > 1){
     family += "Children: " + "\n" + anyChildren(people, person) + "\n" + "\n";
   }
 
-  if(anySiblings(people, person).length > 0){
+  if(anySiblings(people, person).length > 1){
     family += "Siblings: " + "\n" + anySiblings(people, person) + "\n" + "\n";
   }
  console.log(family);
@@ -287,20 +287,17 @@ function anySiblings(people, person){
   let siblings = people.filter(function(el){
     if(el.id === person.id){
       return false;
-      console.log("your siblings 1" + siblings)
     }
     if(el.parents.length === 2){
       if(el.parents[0] === person.parents[0] && el.parents[1] === person.parents[1] ||
       el.parents[1] === person.parents[0] && el.parents[0] === person.parents[1] ){
         return true;
-        console.log("your siblings 2" + siblings)
       }
     }
     if(el.parents.length === 1){
       if(el.parents.length === person.parents.length){
         if(el.parents[0] === person.parents[0]){
           return true;
-          console.log("your siblings 3" + siblings)
         }
       }
     }
@@ -318,9 +315,9 @@ function anySiblings(people, person){
     var descendants = findDescendants(person, people);
   
     if (descendants.length === 0) {
-        descendants = "Descendants not in data set."
+        descendants = "There are no descendants."
     }
-  //console.log(descendants)
+  console.log(descendants)
   }
   
   function findDescendants(person, people) {
@@ -349,8 +346,6 @@ let descendants = people.filter(function(el){
       else if (el.parents[0] === person.id || el.parents[1] === person.id) {
           return true;
       }
-      console.log("your" + person.id)
-      console.log("yours" + el.parents[0])
   });
 
   return descendants;
