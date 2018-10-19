@@ -1,7 +1,7 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
-
+ 
 // app is the function called to start the entire application
 function app(people) {
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -19,11 +19,11 @@ function app(people) {
       break;
   }
 }
-
+ 
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
-
+ 
   switch (userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
@@ -49,109 +49,109 @@ function searchByTraits(people) {
       searchByTraits(people);
       break;
   }
-
+ 
   let foundPerson = filteredPeople[0];
-
+ 
   mainMenu(foundPerson, people);
-
+ 
 }
-
+ 
 function searchByHeight(people) {
   let userInputHeight = prompt("How tall is person in inches?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.height == userInputHeight) {
       return true;
     }
     // return true if el.weight matches userInputHeight
-
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 function searchByWeight(people) {
   let userInputWeight = prompt("How much does the person weigh?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.weight == userInputWeight) {
       return true;
     }
-
-
+ 
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 function searchByEyeColor(people) {
   let userInputEyeColor = prompt("What is the person's eye color?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.eyeColor == userInputEyeColor) {
       return true;
     }
-
-
+ 
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 function searchByGender(people) {
   let userInputGender = prompt("What is the person's gender?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.gender == userInputGender) {
       return true;
     }
-
-
+ 
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 function searchByAge(people) {
   let userInputAge = prompt("What is the person's age?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.age == userInputAge) {
       return true;
     }
-
-
+ 
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 function searchByOccupation(people) {
   let userInputOccupation = prompt("What is the person's occupation?");
-
+ 
   let newArray = people.filter(function (el) {
     if (el.occupation == userInputOccupation) {
       return true;
     }
-
-
+ 
+ 
   });
-
+ 
   return newArray;
 }
-
+ 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people) {
-
+ 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
-
+ 
   if (!person) {
     alert("Could not find that individual.");
     return app(people); // restart
   }
-
+ 
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-
+ 
   switch (displayOption) {
     case "info":
       // TODO: get person's info
@@ -174,21 +174,30 @@ function mainMenu(person, people) {
       return mainMenu(person, people); // ask again
   }
 }
-
-function searchByName(people) {
-  var firstName = promptFor("What is the person's first name?", chars);
-  var lastName = promptFor("What is the person's last name?", chars);
-
-  // TODO: find the person using the name they entered
-
-}
+ 
+  function searchByName(people){
+    var firstName = prompt("What is the person's first name?");
+    //
+    var lastName = prompt("What is the person's last name?");
+      var listName = people.filter(function(el){
+        if( firstName.toLowerCase() === el.firstName.toLowerCase() && lastName.toLowerCase() === el.lastName.toLowerCase()){
+          return true;
+        }
+        else {
+                return false;
+              }
+        });
+        //console.log(listName[0])
+        mainMenu(listName[0], people);
+   
+  }
 // alerts a list of people
 function displayPeople(people) {
   alert(people.map(function (person) {
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-
+ 
 function displayPerson(person) {
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
@@ -200,13 +209,13 @@ function displayPerson(person) {
   personInfo += "Age: " + person.dob + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
-
-
+ 
+ 
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-
-
+ 
+ 
 // function that prompts and validates user input
 function promptFor(question, callback) {
   do {
@@ -214,17 +223,17 @@ function promptFor(question, callback) {
   } while (!response || !callback(response));
   return response;
 }
-
+ 
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input) {
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
-
+ 
 // helper function to pass in as default promptFor validation
 function chars(input) {
   return true; // default validation only
 }
-
+ 
 function displayFamily(person, people){
   let family = "";
     if(person.parents.length > 0){
@@ -235,15 +244,14 @@ function displayFamily(person, people){
   }
   if(person.currentSpouse != null){
     family +=  "Spouse: " + findName(person.currentSpouse, people) + "\n";
-
   }
   console.log(family);
 }
-
+ 
 function displayDescendants(person, people) {
-
+ 
 }
-
+ 
 function findName(id, people){
   let name = people.filter(function(el){
     if(el.id == id){
@@ -251,12 +259,4 @@ function findName(id, people){
     }
   });
   return name[0].firstName + " " +  name[0].lastName;
-}
-
-function getSiblings(person, people)
-{
-  let siblings = people.filter(function(el){
-    return (el.parents.includes(person.parents[0]) || el.parents.includes(person.parents[1]))    
-  })
-  return siblings;
 }
