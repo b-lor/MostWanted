@@ -60,8 +60,8 @@ function searchMultipleTraits(people) {
   let current = [];
   let filteredPeople = people;
   let persons;
-  current = userInputChoice.split(" ");
-  if(!validateMultipleCriteria(current)){
+  current = userInputChoice.split(",");
+  if(!validateMultipleTraits(current)){
     alert("Error. If more than 1 trait is selected, please leave a space in between");
     return searchMultipleTraits(people);
   }
@@ -105,7 +105,7 @@ function searchMultipleTraits(people) {
   }
 }
 
-function validateMultipleCriteria(input){
+function validateMultipleTraits(input){
   for (var i = 0; i < input.length; i++) {
     input[i] = input[i].trim();
   }
@@ -322,7 +322,8 @@ function displayFamily(person, people) {
   if (anySiblings(people, person).length > 1) {
     family += "Siblings: " + "\n" + anySiblings(people, person) + "\n" + "\n";
   }
-  console.log(family);
+  alert(family)
+  //console.log(family);
 }
 
 function findName(id, people) {
