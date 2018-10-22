@@ -27,22 +27,28 @@ function searchByTraits(people) {
   switch (userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
+      alert(displayPeople(filteredPeople));
       break;
     case "weight":
-      filteredPeople = searchByWeight(people);
+    filteredPeople = searchByWeight(people);
+    alert(displayPeople(filteredPeople));
       break;
     // so on and so forth
     case "eye color":
       filteredPeople = searchByEyeColor(people);
+      alert(displayPeople(filteredPeople));
       break;
     case "gender":
       filteredPeople = searchByGender(people);
+      alert(displayPeople(filteredPeople));
       break;
     case "age":
       filteredPeople = searchByAge(people);
+      alert(displayPeople(filteredPeople));
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
+      alert(displayPeople(filteredPeople));
       break;
     default:
       alert("You entered an invalid search type! Please try again.");
@@ -140,6 +146,7 @@ function searchByOccupation(people) {
   return newArray;
 }
  
+
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people) {
  
