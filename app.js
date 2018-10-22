@@ -26,31 +26,25 @@ function searchByTraits(people) {
   switch (userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
-      alert(displayPeople(filteredPeople));
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
-      alert(displayPeople(filteredPeople));
       break;
     // so on and so forth
     case "eye color":
       filteredPeople = searchByEyeColor(people);
-      alert(displayPeople(filteredPeople));
       break;
     case "gender":
       filteredPeople = searchByGender(people);
-      alert(displayPeople(filteredPeople));
       break;
     case "age":
       filteredPeople = searchByAge(people);
-      alert(displayPeople(filteredPeople));
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
-      alert(displayPeople(filteredPeople));
       break;
+      case "multiple traits":
       filteredPeople = searchMultipleTraits(people);
-      alert(displayPeople(filteredPeople));
       break;
     default:
       alert("You entered an invalid search type! Please try again.");
@@ -59,6 +53,76 @@ function searchByTraits(people) {
   }
   let foundPerson = filteredPeople[0];
   mainMenu(foundPerson, people);
+}
+
+function searchMultipleTraits(people) {
+  let userInputChoice = prompt("Select 1 or more criteria: 'gender', 'height', 'weight', 'eye color', 'age'. 'Quit'").toLowerCase();
+  let current = [];
+  let filteredPeople = people;
+  let persons;
+  current = userInputChoice.split(" ");
+  if(!validateMultipleCriteria(current)){
+    alert("Error. If more than 1 trait is selected, please leave a space in between");
+    return searchMultipleTraits(people);
+  }
+  for (var i = 0; i < current.length; i++) {
+      switch(current[i]){
+        case "gender":
+        filteredPeople = (searchByGender(filteredPeople));
+        break;
+        case "height":
+        filteredPeople = (searchByHeight(filteredPeople));
+        break;
+        case "weight":
+        filteredPeople = (searchByWeight(filteredPeople));
+        break;
+        case "eye color":
+        filteredPeople = (searchByEyeColor(filteredPeople));
+        break;
+        case "age":
+        filteredPeople = (searchByAge(filteredPeople));
+        break;
+        case "quit":
+        return;
+        default:
+        alert("You have entered an invalid selection. Try Again.");
+        searchMultipleTraits(people);
+        break;
+      }
+  }
+  if(filteredPeople.length === 1){
+    let foundPerson = filteredPeople[0];
+    mainMenu(foundPerson, people);
+  }
+  else if(filteredPeople.length === 0){
+    alert("No person found. Try again");
+    searchByMultipleTraits(people);
+  }
+  else{
+    alert("There are more than 1 matches.");
+    displayPeople(filteredPeople);
+    mainMenu(searchByName(filteredPeople)[0], people);
+  }
+}
+
+function validateMultipleCriteria(input){
+  for (var i = 0; i < input.length; i++) {
+    input[i] = input[i].trim();
+  }
+  traitsArray = ["gender", "height", "weight", "eye color", "age", "quit"];
+  let isCriteria = false;
+  for (var i = 0; i < input.length; i++) {
+    isCriteria = false;
+    for (var j = 0; j < traitsArray.length; j++) {
+      if(traitsArray[j] === input[i]){
+        isCriteria = true;
+      }
+    }
+    if(!isCriteria){
+      return false;
+    }
+  }
+  return true;
 }
 
 function searchByHeight(people) {
@@ -143,15 +207,15 @@ function searchByOccupation(people) {
   return newArray;
 }
 
-function searchMultipleTraits(people) {
-  let userInputOccupation = prompt("Please enter 1 or more traits");
-  let newArray = people.filter(function (el) {
-    if (el.occupation == userInputOccupation) {
-      return true;
-    }
-  });
-  return newArray;
-}
+// function searchMultipleTraits(people) {
+//   let userInputOccupation = prompt("Please enter 1 or more traits");
+//   let newArray = people.filter(function (el) {
+//     if (el.occupation == userInputOccupation) {
+//       return true;
+//     }
+//   });
+//   return newArray;
+// }
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people) {
@@ -317,7 +381,8 @@ function anyDescendants(person, people) {
   if (descendants.length === 0) {
     descendants = "There are no descendants."
   }
-  console.log(descendants)
+  alert(descendants)
+ // console.log(descendants)
 }
 
 function findDescendants(person, people) {
@@ -331,7 +396,7 @@ function findDescendants(person, people) {
       descendantsToReturn += grandChildren;
     }
   }
-  console.log(descendantsToReturn)
+  //console.log(descendantsToReturn)
   return descendantsToReturn;
 }
 
