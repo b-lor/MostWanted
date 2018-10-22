@@ -21,38 +21,52 @@ function app(people) {
 }
 
 function searchByTraits(people) {
-  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation', multiple traits' .");
-  let filteredPeople;
+  let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation', multiple traits', 'quit' to End.");
+  let filteredPeople = people;
   switch (userSearchChoice) {
     case "height":
-      filteredPeople = searchByHeight(people);
+      filteredPeople = searchByHeight(filteredPeople);
       break;
     case "weight":
-      filteredPeople = searchByWeight(people);
+      filteredPeople = searchByWeight(filteredPeople);
       break;
     // so on and so forth
     case "eye color":
-      filteredPeople = searchByEyeColor(people);
+      filteredPeople = searchByEyeColor(filteredPeople);
       break;
     case "gender":
-      filteredPeople = searchByGender(people);
+      filteredPeople = searchByGender(filteredPeople);
       break;
     case "age":
-      filteredPeople = searchByAge(people);
+      filteredPeople = searchByAge(filteredPeople);
       break;
     case "occupation":
-      filteredPeople = searchByOccupation(people);
+      filteredPeople = searchByOccupation(filteredPeople);
       break;
       case "multiple traits":
-      filteredPeople = searchMultipleTraits(people);
+      filteredPeople = searchMultipleTraits(filteredPeople);
       break;
+      case "quit":
+      return;
     default:
-      alert("You entered an invalid search type! Please try again.");
-      searchByTraits(people);
+      alert("Invalid trait! Please try again.");
+      searchByTraits(foundPerson, people);
       break;
   }
-  let foundPerson = filteredPeople[0];
-  mainMenu(foundPerson, people);
+
+
+  if(filteredPeople.length === 1){
+    let foundPerson = filteredPeople[0];
+    mainMenu(foundPerson, people);
+  }
+  else if(filteredPeople.length === 0){
+    alert("No person found. Try again");
+    searchByTraits(people);
+  }
+  else{
+    displayPeople(filteredPeople);
+    app(people)
+  }
 }
 
 function searchMultipleTraits(people) {
@@ -99,7 +113,6 @@ function searchMultipleTraits(people) {
     searchByMultipleTraits(people);
   }
   else{
-    alert("There are more than 1 matches.");
     displayPeople(filteredPeople);
     mainMenu(searchByName(filteredPeople)[0], people);
   }
